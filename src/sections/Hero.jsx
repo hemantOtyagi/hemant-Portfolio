@@ -3,8 +3,14 @@ import { Canvas } from "@react-three/fiber"
 import HackerRoom from "../components/HackerRoom"
 import { Suspense } from "react"
 import CanvasLoader from "../components/CanvasLoader"
+import { useMediaQuery } from "react-responsive"
 
 const Hero = () => {
+  
+  const isSmall = useMediaQuery({ maxWidth: 440})
+  const isMobile = useMediaQuery({ maxWidth: 768});
+  const isTablet = useMediaQuery({ minWidth: 768 , maxWidth: 1024})
+
   return (
     <section className="min-h-screen w-full flex flex-col relative">
       <div className="w-full mx-auto flex flex-col sm:mt-36 mt-20 c-space gap-3">
@@ -21,10 +27,14 @@ const Hero = () => {
       <div className="w-full h-full inset-0 absolute">
         <Canvas className="w-full h-full">
           <Suspense fallback={<CanvasLoader/>}>
-            <PerspectiveCamera makeDefault position={[0,0,30]}/> 
-            <HackerRoom scale={0.06} position={[0,0,0]} rotation={[0,3,0]}/>
+            <PerspectiveCamera makeDefault position={[0,0,35]}/> 
+            <HackerRoom
+              rotation={isMobile ? [3.5, 0 , 3.14] :[3.5, 0, 3.15]}
+              position={ isMobile ? [1, -7 , -1.5] : [1 ,-11,-10]}
+              scale={isMobile ? 0.11 : 0.15}
+            />
             <ambientLight intensity={1}/>
-            <directionalLight position={[10,10,10]} intensity={0.8}/>
+            <directionalLight position={[10,10,10]} intensity={6}/>
           </Suspense>
         </Canvas> 
       </div>

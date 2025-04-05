@@ -4,12 +4,15 @@ import HackerRoom from "../components/HackerRoom"
 import { Suspense } from "react"
 import CanvasLoader from "../components/CanvasLoader"
 import { useMediaQuery } from "react-responsive"
+import { calculateSizes } from "./constants"
 
 const Hero = () => {
   
   const isSmall = useMediaQuery({ maxWidth: 440})
   const isMobile = useMediaQuery({ maxWidth: 768});
   const isTablet = useMediaQuery({ minWidth: 768 , maxWidth: 1024})
+
+  const sizes = calculateSizes(isSmall , isMobile , isTablet);
 
   return (
     <section className="min-h-screen w-full flex flex-col relative">
@@ -29,9 +32,9 @@ const Hero = () => {
           <Suspense fallback={<CanvasLoader/>}>
             <PerspectiveCamera makeDefault position={[0,0,35]}/> 
             <HackerRoom
-              rotation={isMobile ? [3.5, 0 , 3.14] :[3.5, 0, 3.15]}
-              position={ isMobile ? [1, -7 , -1.5] : [1 ,-11,-10]}
-              scale={isMobile ? 0.11 : 0.15}
+              rotation={isMobile ? [3.3, 0 , 3.14] :[3.5, 0, 3.15]}
+              position={sizes.deskPosition}
+              scale={sizes.deskScale}
             />
             <ambientLight intensity={1}/>
             <directionalLight position={[10,10,10]} intensity={6}/>
